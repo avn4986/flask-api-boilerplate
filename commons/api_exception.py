@@ -3,14 +3,17 @@ from commons.error_definitions import ErrorDefinitions
 
 
 class APIException(Exception):
-    def __init__(self, error=ErrorDefinitions.INTERNAL_SERVER_ERROR, stack_trace=None):
+    error_message: str = None
+
+    def __init__(self, error=ErrorDefinitions.INTERNAL_SERVER_ERROR, error_message: str = None, stack_trace=None):
         self.error = error
         self.stack_trace = stack_trace
+        self.error_message = error_message if error_message is not None else self.error.error_message
 
     def get_error_response(self):
         return {
                    'error-code': self.error.error_code,
-                   'error-message': self.error.error_message,
+                   'error-message': self.error_message,
                    'stack-trace': self.stack_trace
                }, self.error.http_status
 

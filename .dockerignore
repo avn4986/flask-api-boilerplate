@@ -1,3 +1,5 @@
 *.pyc
 .gitignore
 README.md
+logs
+__pycache__
